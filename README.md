@@ -7,7 +7,7 @@ This plugin shows your printer completion state in percent on your StreamDeck wi
 2. You should see in the StreamDeck Application under `Custom` the octodeck plugin.  
 
 ## Configuration
-1. Change the font to 18 pt, choose your favourite color and center the title to middle (see e example)
+1. Choose your favourite color and font (see e example)
    
    ![txt_conf.png](readme/txt_conf.png)
 2. Add your OctoPrint Url e.g `http://192.168.178.13`

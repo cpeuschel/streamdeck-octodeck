@@ -6,19 +6,19 @@
             "States": [
                 {
                     "Image": "resources/actionDefaultImage",
-                    "TitleAlignment": "bottom",
-                    "FontSize": "10"
+                    "TitleAlignment": "middle",
+                    "FontSize": "18"
                 }
             ],
-            "SupportedInMultiActions": true,
-            "Tooltip": "Send an HTTP request to a remote webhook API.",
+            "SupportedInMultiActions": false,
+            "Tooltip": "Show the current print state with OctoPrint",
             "UUID": "com.cpeuschel.octodeck.action"
         }
     ],
     "SDKVersion": 2,
     "Author": "Christian Peuschel",
     "CodePath": "main.html",
-    "Description": "StreamDeck Plugin for OctoPrint - Show the percent of your print",
+    "Description": "StreamDeck Plugin for OctoPrint - Show the percent of your current print",
     "Name": "octodeck",
     "Icon": "resources/pluginIcon",
     "PropertyInspectorPath": "propertyinspector.html",
