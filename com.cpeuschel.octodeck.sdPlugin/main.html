@@ -30,8 +30,12 @@
                         function (jsonResult) {
                             let result = "";
                             let object =  Utils.parseJson(jsonResult);
-                            if (object.state === 'Operational') {
+                            if (object.state === 'Operational' && object.progress.completion) {
+                                result = Math.floor(object.progress.completion) + "%"
+                            } else if (object.state === 'Operational') {
                                 result = "rdy"
+                            } else if (object.state === 'Cancelling') {
+                                result = "cncl"
                             } else if (object.state === 'Offline') {
                                 result = "off"
                             } else {
@@ -47,6 +51,10 @@
                     onWillAppear: (jsonObj) => {
                         $SD.api.sendToPropertyInspector(jsonObj.context, Utils.getProp(jsonObj, "payload.settings", {}), jsonObj.action);
                         this.getData(jsonObj);
+
+                        setInterval(function() {
+                            getData(jsonObj);
+                        }, 300000);
                     },
                     onSendToPlugin: (jsonObj) => {
                         if(jsonObj.payload) {
