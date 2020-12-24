@@ -1,0 +1,39 @@
+{
+    "Actions": [
+        {
+            "Icon": "resources/actionIcon",
+            "Name": "octodeck",
+            "States": [
+                {
+                    "Image": "resources/actionDefaultImage",
+                    "TitleAlignment": "bottom",
+                    "FontSize": "10"
+                }
+            ],
+            "SupportedInMultiActions": true,
+            "Tooltip": "Send an HTTP request to a remote webhook API.",
+            "UUID": "com.cpeuschel.octodeck.action"
+        }
+    ],
+    "SDKVersion": 2,
+    "Author": "Christian Peuschel",
+    "CodePath": "main.html",
+    "Description": "StreamDeck Plugin for OctoPrint - Show the percent of your print",
+    "Name": "octodeck",
+    "Icon": "resources/pluginIcon",
+    "PropertyInspectorPath": "propertyinspector.html",
+    "Version": "1.0",
+    "OS": [
+        {
+            "Platform": "mac",
+            "MinimumVersion": "10.11"
+        },
+        {
+            "Platform": "windows",
+            "MinimumVersion": "10"
+        }
+    ],
+    "Software": {
+        "MinimumVersion" : "4.1"
+    }
+}
