@@ -11,7 +11,7 @@
                 }
             ],
             "SupportedInMultiActions": false,
-            "Tooltip": "Show the current print state with OctoPrint",
+            "Tooltip": "This plugin shows your 3D-Printer completion state in percent on your StreamDeck (OctoPrint required)",
             "UUID": "com.cpeuschel.octodeck.action"
         }
     ],
