@@ -7,10 +7,12 @@
     <body>
         <script src="common.js"></script>
         <script>
+                var autoUpdate = {};
                 $SD.on('connected', (jsonObj) => connected(jsonObj));
 
                 function connected(jsonObj) {
                     $SD.on('com.cpeuschel.octodeck.action.willAppear', (jsonObj) => action.onWillAppear(jsonObj));
+                    $SD.on('com.cpeuschel.octodeck.action.willDisappear', (jsonObj) => action.OnWillDisappear(jsonObj));
                     $SD.on('com.cpeuschel.octodeck.action.keyUp', (jsonObj) => action.onKeyUp(jsonObj));
                     $SD.on('com.cpeuschel.octodeck.action.didReceiveSettings', (jsonObj) => action.onDidReceiveSettings(jsonObj));
                     $SD.on('com.cpeuschel.octodeck.action.propertyInspectorDidAppear', (jsonObj) => {});
@@ -52,9 +54,20 @@
                         $SD.api.sendToPropertyInspector(jsonObj.context, Utils.getProp(jsonObj, "payload.settings", {}), jsonObj.action);
                         this.getData(jsonObj);
 
-                        setInterval(function() {
+                        let timer = autoUpdate;
+                        if (timer != null) {
+                            clearInterval(timer);
+                        }
+
+                        autoUpdate = setInterval(function() {
                             getData(jsonObj);
                         }, 300000);
+                    },
+                    OnWillDisappear: (jsonObj) => {
+                        let timer = autoUpdate;
+                        if (timer != null) {
+                            clearInterval(timer);
+                        }
                     },
                     onSendToPlugin: (jsonObj) => {
                         if(jsonObj.payload) {
