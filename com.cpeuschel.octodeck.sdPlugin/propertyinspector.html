@@ -17,6 +17,14 @@
                 <input class="inspector sdpi-item-value" id="octoKey" value="">
             </div>
             <div class="sdpi-item">
+                <div class="sdpi-item-label">Refresh time (ms)</div>
+                <input class="inspector sdpi-item-value" id="refreshTime" value="">
+            </div>
+            <div class="sdpi-item">
+                <div class="sdpi-item-label">Long press delay (ms)</div>
+                <input class="inspector sdpi-item-value" id="longPressDelay" value="">
+            </div>
+            <div class="sdpi-item">
                 <div class="sdpi-item-label">Are you done?</div>
                 <button class="sdpi-item-value" id="save" onclick="save()">Save</button>
             </div>
@@ -28,6 +36,8 @@
                         settings = Utils.getProp(jsonObj, 'actionInfo.payload.settings', {});
                         document.getElementById("octoUrl").value = settings.octoUrl || "http://";
                         document.getElementById("octoKey").value = settings.octoKey || "key";
+                        document.getElementById("refreshTime").value = settings.refreshTime || "300000";
+                        document.getElementById("longPressDelay").value = settings.longPressDelay || "200";                        
                     }
                 });
             }

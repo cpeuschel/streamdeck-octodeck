@@ -9,11 +9,13 @@
         <script>
                 var autoUpdate = {};
                 $SD.on('connected', (jsonObj) => connected(jsonObj));
+                var longPressTimeout;
 
                 function connected(jsonObj) {
                     $SD.on('com.cpeuschel.octodeck.action.willAppear', (jsonObj) => action.onWillAppear(jsonObj));
                     $SD.on('com.cpeuschel.octodeck.action.willDisappear', (jsonObj) => action.OnWillDisappear(jsonObj));
                     $SD.on('com.cpeuschel.octodeck.action.keyUp', (jsonObj) => action.onKeyUp(jsonObj));
+                    $SD.on('com.cpeuschel.octodeck.action.keyDown', (jsonObj) => action.onKeyDown(jsonObj));
                     $SD.on('com.cpeuschel.octodeck.action.didReceiveSettings', (jsonObj) => action.onDidReceiveSettings(jsonObj));
                     $SD.on('com.cpeuschel.octodeck.action.propertyInspectorDidAppear', (jsonObj) => {});
                     $SD.on('com.cpeuschel.octodeck.action.propertyInspectorDidDisappear', (jsonObj) => {});
@@ -21,7 +23,7 @@
                 }
 
                 function getData(jsonObj) {
-                    if (!jsonObj.payload.settings || !jsonObj.payload.settings.octoUrl || !jsonObj.payload.settings.octoKey) {
+                    if (!jsonObj.payload.settings || !jsonObj.payload.settings.octoUrl || !jsonObj.payload.settings.octoKey || !jsonObj.payload.settings.refreshTime || !jsonObj.payload.settings.longPressDelay) {
                         $SD.api.showAlert(jsonObj.context);
                         return;
                     }
@@ -61,7 +63,7 @@
 
                         autoUpdate = setInterval(function() {
                             getData(jsonObj);
-                        }, 300000);
+                        }, jsonObj.payload.settings.refreshTime);
                     },
                     OnWillDisappear: (jsonObj) => {
                         let timer = autoUpdate;
@@ -75,7 +77,16 @@
                         }
                     },
                     onKeyUp: (jsonObj) => {
+                        if (longPressTimeout){
+                            clearTimeout(longPressTimeout);
+                        }
+                        
                         this.getData(jsonObj);
+                    },
+                    onKeyDown: (jsonObj) => {
+                        longPressTimeout = setTimeout(function() {
+                            $SD.api.showUrl2(jsonObj.context, jsonObj.payload.settings.octoUrl)
+                        }, jsonObj.payload.settings.longPressDelay );
                     }
                 };
         </script>
