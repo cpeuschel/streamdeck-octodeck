@@ -1,45 +1,44 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <title>Stream Deck - Octoprint</title>
-        <link rel="stylesheet" href="sdpi.css">
-        <script src="common.js"></script>
-    </head>
-    <body>
-        <div class="sdpi-wrapper">
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">OctoPrint URL</div>
-                <input class="inspector sdpi-item-value" id="octoUrl" value="">
-            </div>
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">OctoPrint API-Key</div>
-                <input class="inspector sdpi-item-value" id="octoKey" value="">
-            </div>
-            <div class="sdpi-item">
-                <div class="sdpi-item-label">Are you done?</div>
-                <button class="sdpi-item-value" id="save" onclick="save()">Save</button>
-            </div>
-        </div>
-        <script>            
-            if($SD) {
-                $SD.on("connected", function (jsonObj) {
-                    if(jsonObj.hasOwnProperty('actionInfo')) {
-                        settings = Utils.getProp(jsonObj, 'actionInfo.payload.settings', {});
-                        document.getElementById("octoUrl").value = settings.octoUrl || "http://";
-                        document.getElementById("octoKey").value = settings.octoKey || "key";
-                    }
-                });
-            }
-            const save = function() {
-                if($SD) {
-                    var payload = {};
-                    [].forEach.call(document.querySelectorAll(".inspector"), element => {
-                        payload[element.id] = element.value;
-                    });
-                    $SD.api.sendToPlugin($SD.uuid, $SD.actionInfo["action"], payload);
-                }
-            }
-        </script>
-    </body>
+<head>
+    <meta charset="utf-8" />
+    <title>StreamDeck - Octoprint</title>
+    <link rel="stylesheet" href="sdpi.css">
+    <script src="common.js"></script>
+</head>
+
+<body>
+<div class="sdpi-wrapper">
+    <div class="sdpi-item">
+        <div class="sdpi-item-label">OctoPrint URL</div>
+        <input class="sdpi-item-value sdProperty" placeholder="Enter the OctoPrint address (http://192.168.178.13)" value="" id="octoUrl" oninput="setSettings()">
+    </div>
+
+    <div class="sdpi-item">
+        <div class="sdpi-item-label">OctoPrint API-Key</div>
+        <input class="sdpi-item-value sdProperty" placeholder="Enter your OctoPrint API Key" value="" id="octoKey" oninput="setSettings()">
+    </div>
+
+    <div type="select" class="sdpi-item">
+        <div class="sdpi-item-label">Update interval</div>
+        <select class="sdpi-item-value select setvalueSelect sdProperty" id="octoInterval" onchange="setSettings()">
+            <option value="30">30 seconds</option>
+            <option value="60">1 minute</option>
+            <option value="300">5 minutes</option>
+        </select>
+    </div>
+
+    <div type="select" class="sdpi-item">
+        <div class="sdpi-item-label">Background</div>
+        <select class="sdpi-item-value select setvalueSelect sdProperty" id="octoBackground" onchange="setSettings()">
+            <option value="default">Default</option>
+            <option value="black">Black</option>
+            <option value="green">Green</option>
+            <option value="white">White</option>
+            <option value="blue">Blue</option>
+            <option value="red">Red</option>
+        </select>
+    </div>
+</div>
+</body>
 </html>

@@ -1,83 +1,10 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>com.cpeuschel.octodeck</title>
-        <meta charset="utf-8" />
-    </head>
-    <body>
-        <script src="common.js"></script>
-        <script>
-                var autoUpdate = {};
-                $SD.on('connected', (jsonObj) => connected(jsonObj));
-
-                function connected(jsonObj) {
-                    $SD.on('com.cpeuschel.octodeck.action.willAppear', (jsonObj) => action.onWillAppear(jsonObj));
-                    $SD.on('com.cpeuschel.octodeck.action.willDisappear', (jsonObj) => action.OnWillDisappear(jsonObj));
-                    $SD.on('com.cpeuschel.octodeck.action.keyUp', (jsonObj) => action.onKeyUp(jsonObj));
-                    $SD.on('com.cpeuschel.octodeck.action.didReceiveSettings', (jsonObj) => action.onDidReceiveSettings(jsonObj));
-                    $SD.on('com.cpeuschel.octodeck.action.propertyInspectorDidAppear', (jsonObj) => {});
-                    $SD.on('com.cpeuschel.octodeck.action.propertyInspectorDidDisappear', (jsonObj) => {});
-                    $SD.on('com.cpeuschel.octodeck.action.sendToPlugin', (jsonObj) => action.onSendToPlugin(jsonObj));
-                }
-
-                function getData(jsonObj) {
-                    if (!jsonObj.payload.settings || !jsonObj.payload.settings.octoUrl || !jsonObj.payload.settings.octoKey) {
-                        $SD.api.showAlert(jsonObj.context);
-                        return;
-                    }
-                    Utils.getData(jsonObj.payload.settings.octoUrl + "/api/job", {
-                        "content-type": "application/json",
-                        "X-Api-Key": jsonObj.payload.settings.octoKey
-                    }).then(
-                        function (jsonResult) {
-                            let result = "";
-                            let object =  Utils.parseJson(jsonResult);
-                            if (object.state === 'Operational' && object.progress.completion) {
-                                result = Math.floor(object.progress.completion) + "%"
-                            } else if (object.state === 'Operational') {
-                                result = "rdy"
-                            } else if (object.state === 'Cancelling') {
-                                result = "cncl"
-                            } else if (object.state === 'Offline') {
-                                result = "off"
-                            } else {
-                                result = Math.floor(object.progress.completion) + "%"
-                            }
-                            $SD.api.setTitle(jsonObj.context, result);
-                        },
-                        error => $SD.api.showAlert(jsonObj.context));
-                }
-
-                const action = {
-                    onDidReceiveSettings: (jsonObj) => {},
-                    onWillAppear: (jsonObj) => {
-                        $SD.api.sendToPropertyInspector(jsonObj.context, Utils.getProp(jsonObj, "payload.settings", {}), jsonObj.action);
-                        this.getData(jsonObj);
-
-                        let timer = autoUpdate;
-                        if (timer != null) {
-                            clearInterval(timer);
-                        }
-
-                        autoUpdate = setInterval(function() {
-                            getData(jsonObj);
-                        }, 300000);
-                    },
-                    OnWillDisappear: (jsonObj) => {
-                        let timer = autoUpdate;
-                        if (timer != null) {
-                            clearInterval(timer);
-                        }
-                    },
-                    onSendToPlugin: (jsonObj) => {
-                        if(jsonObj.payload) {
-                            $SD.api.setSettings(jsonObj.context, jsonObj.payload);
-                        }
-                    },
-                    onKeyUp: (jsonObj) => {
-                        this.getData(jsonObj);
-                    }
-                };
-        </script>
-    </body>
+<head>
+    <title>com.cpeuschel.octodeck</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <script src="main.js"></script>
+</body>
 </html>
