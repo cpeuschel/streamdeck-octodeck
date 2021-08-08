@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8" />
     <title>StreamDeck - Octoprint</title>
@@ -8,37 +9,69 @@
 </head>
 
 <body>
-<div class="sdpi-wrapper">
-    <div class="sdpi-item">
-        <div class="sdpi-item-label">OctoPrint URL</div>
-        <input class="sdpi-item-value sdProperty" placeholder="Enter the OctoPrint address (http://192.168.178.13)" value="" id="octoUrl" oninput="setSettings()">
-    </div>
+    <div class="sdpi-wrapper">
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">OctoPrint URL</div>
+            <input class="sdpi-item-value sdProperty" placeholder="Enter the OctoPrint address (http://192.168.178.13)"
+                value="" id="octoUrl" oninput="setSettings()">
+        </div>
 
-    <div class="sdpi-item">
-        <div class="sdpi-item-label">OctoPrint API-Key</div>
-        <input class="sdpi-item-value sdProperty" placeholder="Enter your OctoPrint API Key" value="" id="octoKey" oninput="setSettings()">
-    </div>
+        <div class="sdpi-item">
+            <div class="sdpi-item-label">OctoPrint API-Key</div>
+            <input class="sdpi-item-value sdProperty" placeholder="Enter your OctoPrint API Key" value="" id="octoKey"
+                oninput="setSettings()">
+        </div>
 
-    <div type="select" class="sdpi-item">
-        <div class="sdpi-item-label">Update interval</div>
-        <select class="sdpi-item-value select setvalueSelect sdProperty" id="octoInterval" onchange="setSettings()">
-            <option value="30">30 seconds</option>
-            <option value="60">1 minute</option>
-            <option value="300">5 minutes</option>
-        </select>
-    </div>
+        <div type="select" class="sdpi-item">
+            <div class="sdpi-item-label">Update interval</div>
+            <select class="sdpi-item-value select setvalueSelect sdProperty" id="octoInterval" onchange="setSettings()">
+                <option value="30">30 seconds</option>
+                <option value="60">1 minute</option>
+                <option value="300">5 minutes</option>
+            </select>
+        </div>
 
-    <div type="select" class="sdpi-item">
-        <div class="sdpi-item-label">Background</div>
-        <select class="sdpi-item-value select setvalueSelect sdProperty" id="octoBackground" onchange="setSettings()">
-            <option value="default">Default</option>
-            <option value="black">Black</option>
-            <option value="green">Green</option>
-            <option value="white">White</option>
-            <option value="blue">Blue</option>
-            <option value="red">Red</option>
-        </select>
+        <div type="select" class="sdpi-item">
+            <div class="sdpi-item-label">Background</div>
+            <select class="sdpi-item-value select setvalueSelect sdProperty" id="octoBackground"
+                onchange="setSettings()">
+                <option value="default">Default</option>
+                <option value="black">Black</option>
+                <option value="green">Green</option>
+                <option value="white">White</option>
+                <option value="blue">Blue</option>
+                <option value="red">Red</option>
+            </select>
+        </div>
+
+        <div type="select" class="sdpi-item">
+            <div class="sdpi-item-label">Show Completion %</div>
+            <select class="sdpi-item-value select setvalueSelect sdProperty" id="completionPercent"
+                onchange="setSettings()">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <div type="select" class="sdpi-item">
+            <div class="sdpi-item-label">Show Time Left</div>
+            <select class="sdpi-item-value select setvalueSelect sdProperty" id="showTimeLeft" onchange="setSettings()">
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+
+        <div type="select" class="sdpi-item">
+            <div class="sdpi-item-label">Precision</div>
+            <select class="sdpi-item-value select setvalueSelect sdProperty" id="precision" onchange="setSettings()">
+                <option value="hours">Hours</option>
+                <option value="hoursplus">Hours with Decimals</option>
+                <option value="minutes">Minutes</option>
+                <option value="seconds">Seconds</option>
+            </select>
+        </div>
+
     </div>
-</div>
 </body>
+
 </html>
