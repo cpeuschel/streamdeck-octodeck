@@ -1,7 +1,10 @@
 var websocket         = null;
 var pluginUUID        = null;
 var settingsCache     = {};
-var autoUpdate        = {};
+
+// timers for each context (=instance) are stored here.
+var timers        = [];
+
 var DestinationEnum   = Object.freeze({ "HARDWARE_AND_SOFTWARE": 0, "HARDWARE_ONLY": 1, "SOFTWARE_ONLY": 2 });
 const background      = [];
 background['default'] = "data:image/png;base64,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";
@@ -25,12 +28,14 @@ var octoDeckAction    = {
         settingsCache[context] = settings;
         getData(settingsCache[context], context);
 
-        let timer = autoUpdate;
+		// If timer is set, then clear it. (It will be created again soom.)
+        let timer = timers[context];
         if (timer != null) {
             clearInterval(timer);
         }
 
-        autoUpdate = setInterval(function() {
+		// Create timer for this context. (having timers associated with context enables multible instances to exist.)
+        timers[context] = setInterval(function() {
             getData(settingsCache[context], context);
         }, settings.octoInterval * 1000);
     },
@@ -38,7 +43,8 @@ var octoDeckAction    = {
     onWillDisappear: function (context, settings, coordinates) {
         console.log("onWillDisappear context: ", context, " settings: ", settings);
 
-        let timer = autoUpdate;
+		// If timer is set, then clear it.
+        let timer = timers[context];
         if (timer != null) {
             clearInterval(timer);
         }
@@ -82,7 +88,7 @@ var octoDeckAction    = {
         console.log("New Settings", settings);
         console.log("New JSON", JSON.stringify(json));
         octoDeckAction.SetImage(context, background[settings.octoBackground]);
-        let timer = autoUpdate;
+        let timer = timers[context];
         if (timer != null) {
             clearInterval(timer);
         }
@@ -177,7 +183,7 @@ function getData(settings, context) {
         octoDeckAction.showAlert(context);
     })
     .then((out) => {
-        console.log('Received JSON ', out);
+        console.log('Received JSON[',context,']', out);
 
         if (out.state.search("Operational") >= 0 && out.progress.completion) {
             result = Math.floor(out.progress.completion) + "%"
