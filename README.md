@@ -5,6 +5,13 @@ This plugin shows your 3D-Printer completion state in percent on your StreamDeck
 ## Installation
 Download the latest release. Double click on the file `com.cpeuschel.octodeck.streamDeckPlugin` to install.
 
+## On Windows
+1. Run regedit.exe
+1. Navigate to HKEY_CURRENT_USER\Software\Elgato Systems GmbH\StreamDeck.
+1. Edit->New->DWORD (32-bit) value
+1. Set Name to "html_remote_debugging_enabled" and value to 1
+1. Exit and restart Stream Deck application (or reboot)
+
 ## Configuration (Saved automatically)
 1. Choose your favourite color and font (see example)
    
